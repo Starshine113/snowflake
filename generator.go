@@ -3,6 +3,7 @@ package snowflake
 import (
 	"fmt"
 	"math/rand"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -30,6 +31,18 @@ func (g *Generator) Get() Snowflake {
 	id |= g.getIncrement()
 
 	return Snowflake(fmt.Sprintf("%v", id))
+}
+
+// Parse parses the given snowflake into a timestamp
+func (g *Generator) Parse(s Snowflake) (t time.Time, err error) {
+	i, err := strconv.ParseInt(string(s), 10, 64)
+	if err != nil {
+		return
+	}
+
+	timestamp := (i >> 22) + int64(g.Epoch.UnixNano()/1000000)
+	t = time.Unix(0, timestamp*1000000).UTC()
+	return
 }
 
 func (g *Generator) getIncrement() uint64 {
