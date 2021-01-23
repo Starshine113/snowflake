@@ -21,3 +21,7 @@ func (s Snowflake) ToTime(epoch time.Time) time.Time {
 
 	return time.Unix(0, timestamp*1000000).UTC()
 }
+
+func (s Snowflake) String() string {
+	return string(s)
+}
