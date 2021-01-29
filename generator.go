@@ -6,6 +6,9 @@ import (
 	"time"
 )
 
+// DefaultGenerator is a Generator with the epoch set to January 1, 2021 at 00:00 UTC
+var DefaultGenerator = NewGen(time.Date(2021, 1, 1, 0, 0, 0, 0, time.UTC))
+
 // Generator holds info needed for generating custom snowflakes
 type Generator struct {
 	Epoch     time.Time
